@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Hotel</title>
+    <link rel="stylesheet" href="style data hotel.css"/>
+    <script>
+        function validasiFormKamar(event) {
+            const idKamar = document.getElementById("room-id").value;
+            const gambarKamar = document.getElementById("room-image").value;
+            const hargaKamar = document.getElementById("room-price").value;
+            const jenisKamar = document.getElementById("room-type").value;
+            const fasilitasKamar = document.getElementById("room-facilities").value;
+
+           
+            if (!/^\d{2,5}$/.test(idKamar)) {
+                alert("ID Kamar harus berupa angka dan panjangnya antara 2-5 karakter.");
+                event.preventDefault();
+                return false;
+            }
+
+           
+            if (gambarKamar === "") {
+                alert("Gambar Kamar harus dipilih.");
+                event.preventDefault();
+                return false;
+            }
+
+            
+            if (hargaKamar <= 0) {
+                alert("Harga kamar harus lebih besar dari 0.");
+                event.preventDefault();
+                return false;
+            }
+
+            
+            if (jenisKamar === "") {
+                alert("Jenis kamar harus dipilih.");
+                event.preventDefault();
+                return false;
+            }
+
+           
+            if (fasilitasKamar.trim() === "") {
+                alert("Fasilitas harus diisi.");
+                event.preventDefault();
+                return false;
+            }
+
+            return true;
+        }
+
+        function validasiFormFasilitas(event) {
+            const idFasilitas = document.getElementById("facility-id").value;
+            const namaFasilitas = document.getElementById("facility-name").value;
+            const hargaWeekend = document.getElementById("facility-weekend-price").value;
+            const hargaWeekday = document.getElementById("facility-weekday-price").value;
+            const kuotaFasilitas = document.getElementById("facility-quota").value;
+            const jamBuka = document.getElementById("facility-hours-open").value;
+            const jamTutup = document.getElementById("facility-hours-close").value;
+
+        
+            if (!/^\d{2,5}$/.test(idFasilitas)) {
+                alert("ID Fasilitas harus berupa angka dan panjangnya antara 2-5 karakter.");
+                event.preventDefault();
+                return false;
+            }
+
+      
+            if (namaFasilitas.trim() === "") {
+                alert("Nama fasilitas harus diisi.");
+                event.preventDefault();
+                return false;
+            }
+
+            
+            if (hargaWeekend <= 0 || hargaWeekday <= 0) {
+                alert("Harga weekend dan weekday harus lebih besar dari 0.");
+                event.preventDefault();
+                return false;
+            }
+
+            // Validasi Kuota
+            if (kuotaFasilitas <= 0) {
+                alert("Kuota harus lebih besar dari 0.");
+                event.preventDefault();
+                return false;
+            }
+
+            if (jamBuka === "" || jamTutup === "") {
+                alert("Jam buka dan jam tutup harus diisi.");
+                event.preventDefault();
+                return false;
+            }
+
+            return true;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("room-form").addEventListener("submit", function(event) {
+                validasiFormKamar(event);
+            });
+
+            document.getElementById("facility-form").addEventListener("submit", function(event) {
+                validasiFormFasilitas(event);
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Data Kamar</h2>
+        <table>
+            <tr style="background-color: rgb(12, 8, 3);">
+                <th>ID Kamar</th>
+                <th>Gambar Ruangan</th>
+                <th>Jenis Kamar</th>
+                <th>Harga</th>
+                <th>Fasilitas</th>
+            </tr>
+            <tr>
+                <td>01</td>
+                <td><img src="gambar/gambar1.jpeg" alt="Gambar Kamar 1"></td>
+                <td>VVIP</td>
+                <td>Rp 1.000.000</td>
+                <td>Kolam Renang, AC, Makan 2X, Kursi Pijat, TV</td>
+            </tr>
+            <tr>
+                <td>02</td>
+                <td><img src="gambar/gambar2.jpeg" alt="Gambar Kamar 2"></td>
+                <td>Biasa</td>
+                <td>Rp 500.000</td>
+                <td>Kolam Renang, Wi-Fi, Makan 1X, TV</td>
+            </tr>
+        </table>
+
+        <h2>Tambah Data Kamar</h2>
+        <form id="room-form" onsubmit="return validasiFormKamar(event)">
+            <label for="room-id">ID Kamar:</label>
+            <input type="text" id="room-id" name="room-id" placeholder="ID Kamar (misalnya: 01)" required pattern="\d+" title="ID Kamar hanya boleh angka"><br><br>
+
+            <label for="room-image">Gambar Ruangan:</label>
+            <input type="file" id="room-image" name="room-image" accept="image/*" required><br><br>
+
+            <label for="room-type">Jenis Kamar:</label>
+            <select id="room-type" name="room-type" required>
+                <option value="">Pilih Jenis Kamar</option>
+                <option value="VVIP">VVIP</option>
+                <option value="Biasa">Biasa</option>
+                <option value="Suite">Suite</option>
+            </select><br><br>
+
+            <label for="room-price">Harga:</label>
+            <input type="number" id="room-price" name="room-price" placeholder="Harga dalam Rp" required min="1"><br><br>
+
+            <label for="room-facilities">Fasilitas:</label>
+            <textarea id="room-facilities" name="room-facilities" rows="4" required placeholder="Daftar fasilitas (contoh: Kolam Renang, AC, TV)"></textarea><br><br>
+
+            <button type="submit">Tambah Kamar</button>
+        </form>
+
+        <h2>Data Fasilitas</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nama Fasilitas</th>
+                <th>Harga Weekend</th>
+                <th>Harga Weekday</th>
+                <th>Kuota</th>
+                <th>Jam Buka</th>
+                <th>Jam Tutup</th>
+            </tr>
+            <tr>
+                <td>01</td>
+                <td>Kolam Renang, AC, Makan 2X, Kursi Pijat, TV</td>
+                <td>Rp 800.000</td>
+                <td>Rp 650.000</td>
+                <td>30</td>
+                <td>07:00</td>
+                <td>22:00</td>
+            </tr>
+            <tr>
+                <td>02</td>
+                <td>Kolam Renang, Wi-Fi, Makan 1X, TV</td>
+                <td>Rp 500.000</td>
+                <td>Rp 350.000</td>
+                <td>20</td>
+                <td>09:00</td>
+                <td>21:00</td>
+            </tr>
+        </table>
+
+        <h2>Tambah Data Fasilitas</h2>
+        <form id="facility-form" onsubmit="return validasiFormFasilitas(event)">
+            <label for="facility-id">ID Fasilitas:</label>
+            <input type="text" id="facility-id" name="facility-id" placeholder="ID Fasilitas (misalnya: 01)" required pattern="\d+" title="ID Fasilitas hanya boleh angka"><br><br>
+
+            <label for="facility-name">Nama Fasilitas:</label>
+            <textarea id="facility-name" name="facility-name" rows="4" placeholder="Nama fasilitas (contoh: Kolam Renang, Wi-Fi, dll)" required></textarea><br><br>
+
+            <label for="facility-weekend-price">Harga Weekend:</label>
+            <input type="number" id="facility-weekend-price" name="facility-weekend-price" placeholder="Harga weekend dalam Rp" required min="1"><br><br>
+
+            <label for="facility-weekday-price">Harga Weekday:</label>
+            <input type="number" id="facility-weekday-price" name="facility-weekday-price" placeholder="Harga weekday dalam Rp" required min="1"><br><br>
+
+            <label for="facility-quota">Kuota:</label>
+            <input type="number" id="facility-quota" name="facility-quota" placeholder="Kuota fasilitas" required min="1"><br><br>
+
+            <label for="facility-hours-open">Jam Buka:</label>
+            <input type="time" id="facility-hours-open" name="facility-hours-open" required><br><br>
+
+            <label for="facility-hours-close">Jam Tutup:</label>
+            <input type="time" id="facility-hours-close" name="facility-hours-close" required><br><br>
+
+            <button type="submit">Tambah Fasilitas</button>
+        </form>
+    </div>
+
+</body>
+</html>

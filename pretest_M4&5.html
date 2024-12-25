@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validasi Username dan Password</title>
+    <script>
+        function validateForm() {
+            // Mendapatkan nilai dari form
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            // Validasi input tidak boleh kosong
+            if (username === "" || password === "") {
+                alert("Username dan Password tidak boleh kosong!");
+                return false;
+            }
+
+            // Username dan password yang benar (contoh)
+            var correctUsername = "danil";
+            var correctPassword = "danil123";
+
+            // Validasi username dan password
+            if (username === correctUsername && password === correctPassword) {
+                // Menampilkan pesan berhasil dan tabel informasi
+                document.getElementById("result").innerHTML = "<p>Login Berhasil!</p>";
+                document.getElementById("userTable").style.display = "block"; // Menampilkan tabel
+                document.getElementById("userName").innerText = username; // Mengisi username
+                document.getElementById("loginStatus").innerText = "Berhasil"; // Status login
+                
+                return false; // Mencegah form dari pengiriman
+            } else {
+                alert("Login Gagal! Username atau Password salah.");
+                return false; // Mencegah form dari pengiriman
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <h2>Form Login</h2>
+
+    <form onsubmit="return validateForm()">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div><br>
+
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div><br>
+
+        <div>
+            <button type="submit">Login</button>
+        </div>
+    </form>
+
+    <!-- Pesan Hasil Login -->
+    <div id="result"></div>
+
+    <!-- Tabel Informasi Pengguna -->
+    <table id="userTable" border="1" cellpadding="10" cellspacing="0" style="display:none; margin-top:20px;">
+        <thead>
+            <tr>
+                <th>Nama Pengguna</th>
+                <th>Status Login</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="userName"></td>
+                <td id="loginStatus"></td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
